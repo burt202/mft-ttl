@@ -12,7 +12,7 @@ var cleanCSS = require("gulp-clean-css");
 
 var getDataForLeague = require("./src/get-data-for-league");
 
-var LIVE_LEAGUE = "mft-summer";
+var LIVE_LEAGUE = "summer-2016";
 var liveLeague = null;
 var previousLeagues = [];
 
