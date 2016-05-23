@@ -11,9 +11,11 @@
 
   <h1>Summer 2016</h1>
 
+  <p><a href="index.html">back</a></p>
+
   
 
-  <p><a href="index.html">back</a></p>
+  
 
   <div class="standings">
     <h2>Current Standings</h2>
@@ -286,7 +288,7 @@
   </div>
 
   <div class="all-results">
-    <h2>All Results</h2>
+    <h2>All Results 2</h2>
     
       
         <h3>May 23rd 2016</h3>
@@ -1824,7 +1826,7 @@
 
     var allResultsDiv = document.querySelector(".all-results");
 
-    [].forEach.call(document.querySelectorAll(".standings tbody td"), function (el) {
+    [].forEach.call(document.querySelectorAll(".standings tbody td a"), function (el) {
       el.addEventListener("click", function (e) {
         var row = e.target.parentNode.parentNode;
         var selectedPlayer = row.getAttribute("data-player");
