@@ -6,11 +6,15 @@
 
   <h1>{{ displayName }}</h1>
 
+  <p><a href="index.html">back</a></p>
+
   {% if startDate and endDate %}
     <p>{{ startDate }} - {{ endDate }}</p>
   {% endif %}
 
-  <p><a href="index.html">back</a></p>
+  {% if description %}
+    <p>{{ description }}</p>
+  {% endif %}
 
   <div class="standings">
     <h2>Current Standings</h2>
@@ -43,7 +47,7 @@
   </div>
 
   <div class="all-results">
-    <h2>All Results</h2>
+    <h2>All Results {{ allResults.length }}</h2>
     {% if allResults.length %}
       {% for dateRow in allResults %}
         <h3>{{ dateRow.date }}</h3>
@@ -85,7 +89,7 @@
 
     var allResultsDiv = document.querySelector(".all-results");
 
-    [].forEach.call(document.querySelectorAll(".standings tbody td"), function (el) {
+    [].forEach.call(document.querySelectorAll(".standings tbody td a"), function (el) {
       el.addEventListener("click", function (e) {
         var row = e.target.parentNode.parentNode;
         var selectedPlayer = row.getAttribute("data-player");

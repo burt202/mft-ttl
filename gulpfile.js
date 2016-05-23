@@ -17,7 +17,7 @@ var liveLeague = null;
 var previousLeagues = [];
 
 var basePath = __dirname + "/leagues";
-var leagues = fs.readdirSync(basePath);
+var leagues = R.without([".gitkeep"], fs.readdirSync(basePath));
 
 gulp.task("default", ["watch"]);
 
@@ -31,6 +31,8 @@ gulp.task("clean", function () {
 });
 
 gulp.task("process-league-templates", function () {
+  if (!leagues.length) return;
+
   return es.merge(leagues.map(function (leagueName) {
     var leagueData = getDataForLeague(basePath, leagueName);
 

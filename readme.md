@@ -8,15 +8,13 @@ Once the git hook has been copied and a league has been setup (see instructions 
 
 - fork and clone this repo
 - `npm i`
-- `npm run add-hook`
-- `rm -rf leagues/test`
 - `npm run add-league`
 - add players to your league (see below)
+- git commit and push
+- `npm run add-hook`
 - make sure your newly added league is marked as live (see below)
-- `git push`
+- git commit and push
 - goto `http://[your_github_username_here].github.io/table-tennis-scoring/`
-- as and when results come in, commit them (in required format, see below) and push
-- your github pages site should reflect the results
 
 ### Adding Players
 
@@ -42,3 +40,18 @@ Add or change these values as you wish.
 - displayName (required) : the front-facing name of your league
 - startDate (optional) : to signify when the league is to start
 - endDate (optional) : to signify when the league is to end
+- description (optional) : a good place for stating rules etc
+
+### Update Forked Repo
+
+Occasionally, when there has been updates in this repo, you may want to update your forked repo with the changes. To do this follow the steps below.
+
+- `git add remote forked git@github.com:burt202/table-tennis-scoring.git`
+- `git pull forked master`
+- `git push`
+
+### Example
+
+- `cp -avr examples/test/ leagues/test`
+- `gulp build`
+- open `build/index.html` in a browser
