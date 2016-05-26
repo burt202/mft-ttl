@@ -12,12 +12,17 @@ var cleanCSS = require("gulp-clean-css");
 
 var getDataForLeague = require("./src/get-data-for-league");
 
-var LIVE_LEAGUE = "summer-2016";
-var liveLeague = null;
-var previousLeagues = [];
-
+var leagues = [];
 var basePath = __dirname + "/leagues";
-var leagues = R.without([".gitkeep"], fs.readdirSync(basePath));
+var liveLeagueName;
+
+try {
+  liveLeagueName = fs.readFileSync(basePath + "/LIVE_LEAGUE");
+} catch (e) {
+  liveLeagueName = null;
+}
+
+var leagueNames = R.without([".gitkeep", "LIVE_LEAGUE"], fs.readdirSync(basePath));
 
 gulp.task("default", ["watch"]);
 
@@ -31,16 +36,9 @@ gulp.task("clean", function () {
 });
 
 gulp.task("process-league-templates", function () {
-  if (!leagues.length) return;
-
-  return es.merge(leagues.map(function (leagueName) {
+  return es.merge(leagueNames.map(function (leagueName) {
     var leagueData = getDataForLeague(basePath, leagueName);
-
-    if (leagueName === LIVE_LEAGUE) {
-      liveLeague = {name: leagueName, displayName: leagueData.displayName};
-    } else {
-      previousLeagues = R.append({name: leagueName, displayName: leagueData.displayName}, previousLeagues);
-    }
+    leagues = R.append({name: leagueName, displayName: leagueData.displayName}, leagues);
 
     return gulp.src("src/templates/league.html")
       .pipe(data(R.merge({name: leagueName}, leagueData)))
@@ -51,6 +49,10 @@ gulp.task("process-league-templates", function () {
 });
 
 gulp.task("process-index-template", function () {
+  var liveLeague = R.find(R.propEq("name", liveLeagueName))(leagues);
+  if (!liveLeague) liveLeague = R.head(leagues);
+  var previousLeagues = R.reject(R.propEq("name", liveLeague.name), leagues);
+
   return gulp.src("./src/templates/index.html")
     .pipe(data({liveLeague: liveLeague, previousLeagues: previousLeagues}))
     .pipe(swig())
@@ -64,6 +66,8 @@ gulp.task("minify-css", function () {
 });
 
 gulp.task("build", function (callback) {
+  if (!leagueNames.length) return;
+
   runSequence(
     "clean",
     "process-league-templates",

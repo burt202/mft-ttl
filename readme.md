@@ -12,7 +12,7 @@ Once the git hook has been copied and a league has been setup (see instructions 
 - add players to your league (see below)
 - git commit and push
 - `npm run add-hook`
-- make sure your newly added league is marked as live (see below)
+- `npm run choose-live`
 - git commit and push
 - goto `http://[your_github_username_here].github.io/table-tennis-scoring/`
 
@@ -21,16 +21,9 @@ Once the git hook has been copied and a league has been setup (see instructions 
 - players should be added to the `players` file within your selected leagues directory
 - each player should be separated by a new line
 
-### Marking A League As Live
-
-- in `gulpfile.js` update the LIVE_LEAGUE constant to the name of the league that you want to be marked as live
-- NOTE: the value must match the directory name of the selected league
-
 ### Adding Results
 
-- results are grouped into files that represent games played on certain dates
-- results file names should be in the format of YYYYMMDD with no extension
-- results file contents should be in a csv format where each row has a winner, loser and a score, in that order
+- `npm run add-result`
 - NOTE: the winner and loser names must match a player added to league for it to be counted as part of the standings
 
 ### MetaData Propeties
@@ -52,6 +45,5 @@ Occasionally, when there has been updates in this repo, you may want to update y
 
 ### Example
 
-- `cp -avr examples/test/ leagues/test`
-- `gulp build`
+- `npm run example` - this copies the test league into the `leagues` directory, and then builds it
 - open `build/index.html` in a browser
